@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RÍO CALI: Entre la Belleza Urbana y la Contaminación Ambiental</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tipografías Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Iconos Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              DEFAULT: '#0F3D2E',
+              light: '#165440',
+              dark: '#09261C'
+            },
+            emeraldRiver: {
+              DEFAULT: '#10B981',
+              dark: '#059669',
+              light: '#D1FAE5'
+            },
+            waterBlue: {
+              DEFAULT: '#0284C7',
+              bright: '#0EA5E9',
+              light: '#E0F2FE'
+            },
+            alertOrange: {
+              DEFAULT: '#F97316',
+              dark: '#EA580C',
+              light: '#FFEDD5'
+            },
+            surfaceGray: '#F8FAFC'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['Merriweather', 'serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FFFFFF;
+      color: #1E293B;
+      overflow-x: hidden;
+    }
+
+    .font-editorial {
+      font-family: 'Merriweather', serif;
+    }
+
+    /* Animación de ondas SVG */
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(-25%); }
+      100% { transform: translateX(0); }
+    }
+    .animate-wave-slow {
+      animation: waveMove 14s ease-in-out infinite;
+    }
+    .animate-wave-fast {
+      animation: waveMove 9s ease-in-out infinite reverse;
+    }
+
+    /* Revelado suave al hacer scroll */
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Pulso en marcadores del mapa */
+    @keyframes pulseRing {
+      0% { transform: scale(0.85); opacity: 0.9; }
+      70% { transform: scale(1.65); opacity: 0; }
+      100% { transform: scale(1.65); opacity: 0; }
+    }
+    .map-pulse {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: pulseRing 2.2s infinite;
+    }
+
+    /* Ocultar barra de desplazamiento en pestañas horizontales */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Scrollbar personalizado */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3F4F6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0F3D2E;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10B981;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-emeraldRiver selection:text-white">
+
+  <!-- ===================================================================== -->
+  <!-- BARRA DE NAVEGACIÓN FIJA CON PROGRESO DE LECTURA                      -->
+  <!-- ===================================================================== -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300">
+    <div class="w-full h-1 bg-slate-100">
+      <div id="reading-progress" class="h-full bg-gradient-to-r from-forest via-emeraldRiver to-waterBlue transition-all duration-150" style="width: 0%;"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#portada" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-forest text-white flex items-center justify-center shadow-sm group-hover:bg-emeraldRiver transition-colors">
+          <i data-lucide="waves" class="w-5 h-5"></i>
+        </div>
+        <div class="leading-tight">
+          <span class="block text-xs font-bold tracking-widest uppercase text-emeraldRiver-dark">Investigación de Campo</span>
+          <span class="block text-sm sm:text-base font-extrabold text-forest">RÍO CALI <span class="font-normal text-slate-500 hidden sm:inline">| Bulevar del Río</span></span>
+        </div>
+      </a>
+
+      <!-- Menú Desktop -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="#contexto" class="hover:text-forest transition-colors">Contexto</a>
+        <a href="#evidencias-galeria" class="hover:text-emeraldRiver-dark transition-colors">Evidencias Fotográficas</a>
+        <a href="#problematica" class="hover:text-alertOrange transition-colors">Problemática</a>
+        <a href="#metodo-cientifico" class="hover:text-forest transition-colors">Método Científico</a>
+        <a href="#resultados" class="hover:text-waterBlue transition-colors">Datos de Campo</a>
+        <a href="#encuesta" class="hover:text-emeraldRiver-dark transition-colors">Encuesta</a>
+        <a href="#acciones" class="px-4 py-2 rounded-full bg-forest text-white hover:bg-emeraldRiver transition-colors shadow-sm">Propuestas</a>
+      </nav>
+
+      <!-- Botón móvil -->
+      <button id="mobile-menu-btn" aria-label="Abrir menú" class="lg:hidden p-2.5 rounded-xl text-forest hover:bg-slate-100 transition-colors">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Menú móvil desplegable -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-5 space-y-2 shadow-lg">
+      <a href="#contexto" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">1. Contexto Territorial</a>
+      <a href="#evidencias-galeria" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">2. Galería de 4 Evidencias</a>
+      <a href="#problematica" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">3. Problemática Ambiental</a>
+      <a href="#metodo-cientifico" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">4. Método Científico (Fases 1–7)</a>
+      <a href="#resultados" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">5. Resultados por Franja</a>
+      <a href="#encuesta" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-slate-700 hover:bg-slate-50">6. Cuestionario de Campo</a>
+      <a href="#acciones" class="mobile-link block px-3 py-2.5 rounded-xl font-semibold text-forest bg-emeraldRiver-light/50">7. Soluciones y Conclusiones</a>
+    </div>
+  </header>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 1: PORTADA PRINCIPAL (HERO) CON IMAGEN 1 DE FONDO             -->
+  <!-- ===================================================================== -->
+  <section id="portada" class="relative min-h-screen pt-24 pb-28 flex flex-col justify-between overflow-hidden bg-forest text-white">
+    <!-- Imagen panorámica de fondo (rio_panoramica.jpg) -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="rio_panoramica.jpg"
+        alt="Panorámica del Río Cali y las palmas del Bulevar del Río"
+        class="w-full h-full object-cover object-center scale-105 opacity-40"
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80';"
+      />
+      <div class="absolute inset-0 bg-gradient-to-br from-forest/95 via-forest/85 to-waterBlue/80"></div>
+      <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#FFFFFF 1px, transparent 1px); background-size: 28px 28px;"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-auto pt-8">
+      <div class="max-w-4xl">
+        <div class="inline-flex flex-wrap items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs sm:text-sm font-semibold tracking-wide text-emeraldRiver-light mb-6">
+          <span class="w-2 h-2 rounded-full bg-emeraldRiver animate-ping"></span>
+          <span>ESTUDIO AMBIENTAL Y SANITARIO • BULEVAR DEL RÍO CALI</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12] mb-6">
+          RÍO CALI: <span class="text-transparent bg-clip-text bg-gradient-to-r from-emeraldRiver via-teal-200 to-sky-300">¿UN PARAÍSO URBANO EN RIESGO?</span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-slate-200 font-normal leading-relaxed max-w-2xl mb-9">
+          Análisis científico de la contaminación ambiental y la problemática sanitaria en el sector del Bulevar del Río (Calle 8ª a Calle 12ª). Desde la evidencia visual de campo hasta el diagnóstico comprobable.
+        </p>
+
+        <!-- Botones de llamada a la acción -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-12">
+          <a href="#evidencias-galeria" class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-emeraldRiver hover:bg-emeraldRiver-dark text-white font-bold text-base shadow-lg shadow-emeraldRiver/30 transition-all transform hover:-translate-y-0.5">
+            <i data-lucide="image" class="w-5 h-5"></i>
+            <span>Ver 4 Evidencias de Campo</span>
+          </a>
+          <a href="#metodo-cientifico" class="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-bold text-base transition-all transform hover:-translate-y-0.5">
+            <i data-lucide="microscope" class="w-5 h-5 text-emeraldRiver-light"></i>
+            <span>Paso a Paso del Método Científico</span>
+          </a>
+        </div>
+
+        <!-- Indicadores Clave Rápidos -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl">
+          <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-alertOrange/20 border border-alertOrange/40 flex items-center justify-center text-alertOrange shrink-0">
+              <i data-lucide="trash-2" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xl font-extrabold text-white">30+ residuos</p>
+              <p class="text-xs text-slate-300">Por cada 10 m de ladera</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-waterBlue/30 border border-sky-300/40 flex items-center justify-center text-sky-300 shrink-0">
+              <i data-lucide="moon" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xl font-extrabold text-white">50–70 objetos</p>
+              <p class="text-xs text-slate-300">Pico nocturno (6–9 p. m.)</p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center gap-3.5">
+            <div class="w-11 h-11 rounded-xl bg-emeraldRiver/25 border border-emeraldRiver/40 flex items-center justify-center text-emeraldRiver-light shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <p class="text-xl font-extrabold text-white">Calle 8ª – 12ª</p>
+              <p class="text-xs text-slate-300">Tramo Bulevar del Río</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Olas SVG decorativas en la base -->
+    <div class="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+      <svg class="relative block w-[200%] h-16 sm:h-24 animate-wave-slow" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path fill="rgba(14, 165, 233, 0.35)" d="M0,64L60,69.3C120,75,240,85,360,80C480,75,600,53,720,48C840,43,960,53,1080,64C1200,75,1320,85,1380,90.7L1440,96L1440,120L1380,120C1320,120,1200,120,1080,120C960,120,840,120,720,120C600,120,480,120,360,120C240,120,120,120,60,120L0,120Z"></path>
+      </svg>
+      <svg class="relative block w-[200%] h-14 sm:h-20 -mt-12 sm:-mt-16 animate-wave-fast" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path fill="#FFFFFF" d="M0,32L80,48C160,64,320,96,480,96C640,96,800,64,960,53.3C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 2: CONTEXTO TERRITORIAL Y MAPA INTERACTIVO                    -->
+  <!-- ===================================================================== -->
+  <section id="contexto" class="py-20 bg-white reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-waterBlue bg-waterBlue-light px-3.5 py-1.5 rounded-full mb-3">
+          <i data-lucide="compass" class="w-4 h-4"></i> 01. Contexto Territorial y Temporal
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-forest tracking-tight mb-4">
+          Una problemática ambiental en el corazón de Cali
+        </h2>
+        <p class="text-slate-600 text-lg leading-relaxed">
+          El <strong>Bulevar del Río</strong> es uno de los espacios públicos más emblemáticos de Santiago de Cali: un corredor ecológico, cultural y turístico donde convergen la biodiversidad ribereña, el comercio gastronómico y la vida ciudadana. Sin embargo, esta intensa dinámica urbana ejerce una presión directa sobre el cauce del <strong>Río Cali</strong>.
+        </p>
+      </div>
+
+      <!-- Fichas técnicas -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
+        <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200/80 hover:border-emeraldRiver transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-forest text-white flex items-center justify-center mb-4">
+            <i data-lucide="map" class="w-5 h-5"></i>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Ubicación Exacta</p>
+          <p class="text-lg font-extrabold text-forest mt-1">Santiago de Cali, Colombia</p>
+          <p class="text-sm text-slate-600 mt-1">Ronda del Río Cali, sector Bulevar (Calle 8ª a Calle 12ª).</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200/80 hover:border-emeraldRiver transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-waterBlue text-white flex items-center justify-center mb-4">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Periodo de Estudio</p>
+          <p class="text-lg font-extrabold text-forest mt-1">19 al 25 de octubre, 2026</p>
+          <p class="text-sm text-slate-600 mt-1">Monitoreo continuo durante 7 días (laborales y fin de semana).</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200/80 hover:border-emeraldRiver transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-emeraldRiver text-white flex items-center justify-center mb-4">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Franja de Monitoreo</p>
+          <p class="text-lg font-extrabold text-forest mt-1">6:00 a. m. a 9:00 p. m.</p>
+          <p class="text-sm text-slate-600 mt-1">Dividida en tres bloques de muestreo (mañana, tarde y noche).</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200/80 hover:border-emeraldRiver transition-colors">
+          <div class="w-10 h-10 rounded-xl bg-alertOrange text-white flex items-center justify-center mb-4">
+            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+          </div>
+          <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Relevancia Urbana</p>
+          <p class="text-lg font-extrabold text-forest mt-1">Corredor Eco-Turístico</p>
+          <p class="text-sm text-slate-600 mt-1">Punto de encuentro para fauna silvestre, deportistas y turistas.</p>
+        </div>
+      </div>
+
+      <!-- MAPA INTERACTIVO SVG -->
+      <div class="bg-surfaceGray rounded-3xl border border-slate-200 p-6 sm:p-8 mb-16 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emeraldRiver-dark">Cartografía de Campo Interactiva</span>
+            <h3 class="text-2xl font-extrabold text-forest">Mapa de Diagnóstico: Tramo Calle 8ª a Calle 12ª</h3>
+          </div>
+          <p class="text-sm text-slate-600 bg-white px-4 py-2 rounded-xl border border-slate-200 inline-flex items-center gap-2">
+            <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-waterBlue"></i>
+            <span>Haz clic en los números del mapa para ver el diagnóstico de cada punto</span>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <!-- Lienzo SVG -->
+          <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 overflow-hidden">
+            <svg viewBox="0 0 720 380" class="w-full h-auto rounded-xl" role="img" aria-label="Mapa ilustrado del sector Bulevar del Río">
+              <rect x="0" y="0" width="720" height="380" fill="#F1F5F9" rx="16" />
+
+              <!-- Rondas verdes -->
+              <path d="M0,45 Q240,65 480,45 T720,55 L720,145 Q480,130 240,150 T0,135 Z" fill="#D1FAE5" />
+              <path d="M0,210 Q240,225 480,205 T720,215 L720,285 Q480,275 240,295 T0,280 Z" fill="#DCFCE7" />
+
+              <!-- Cauce del Río -->
+              <path d="M0,135 Q240,150 480,130 T720,140 L720,215 Q480,205 240,225 T0,210 Z" fill="#0EA5E9" opacity="0.85" />
+              <path d="M40,172 Q160,180 280,168 T520,170 T690,175" fill="none" stroke="#E0F2FE" stroke-width="3" stroke-dasharray="14 10" stroke-linecap="round" />
+              <path d="M20,192 Q200,200 360,188 T680,192" fill="none" stroke="#BAE6FD" stroke-width="2" stroke-dasharray="8 12" stroke-linecap="round" />
+
+              <!-- Paseo Peatonal -->
+              <rect x="0" y="280" width="720" height="100" fill="#E2E8F0" />
+              <line x1="0" y1="280" x2="720" y2="280" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6 6" />
+
+              <!-- Puentes -->
+              <rect x="95" y="35" width="38" height="310" fill="#CBD5E1" stroke="#64748B" stroke-width="2" rx="4" />
+              <text x="114" y="26" text-anchor="middle" font-size="12" font-weight="800" fill="#0F3D2E">CALLE 8ª</text>
+
+              <rect x="345" y="35" width="38" height="310" fill="#CBD5E1" stroke="#64748B" stroke-width="2" rx="4" />
+              <text x="364" y="26" text-anchor="middle" font-size="12" font-weight="800" fill="#0F3D2E">CALLE 10ª</text>
+
+              <rect x="595" y="35" width="38" height="310" fill="#CBD5E1" stroke="#64748B" stroke-width="2" rx="4" />
+              <text x="614" y="26" text-anchor="middle" font-size="12" font-weight="800" fill="#0F3D2E">CALLE 12ª</text>
+
+              <text x="230" y="182" text-anchor="middle" font-size="13" font-weight="800" fill="#FFFFFF" letter-spacing="2">CAUCE RÍO CALI</text>
+              <text x="490" y="345" text-anchor="middle" font-size="12" font-weight="700" fill="#475569" letter-spacing="1">PASEO PEATONAL BULEVAR DEL RÍO</text>
+
+              <!-- Nodos interactivos -->
+              <g class="cursor-pointer map-node" data-spot="puentes" tabindex="0" role="button" aria-label="Inspeccionar Puentes">
+                <circle cx="114" cy="145" r="18" fill="#F97316" class="map-pulse" />
+                <circle cx="114" cy="145" r="13" fill="#EA580C" stroke="#FFFFFF" stroke-width="3" />
+                <text x="114" y="150" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">1</text>
+              </g>
+
+              <g class="cursor-pointer map-node" data-spot="laderas" tabindex="0" role="button" aria-label="Inspeccionar Laderas">
+                <circle cx="250" cy="222" r="18" fill="#10B981" class="map-pulse" />
+                <circle cx="250" cy="222" r="13" fill="#0F3D2E" stroke="#FFFFFF" stroke-width="3" />
+                <text x="250" y="227" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">2</text>
+              </g>
+
+              <g class="cursor-pointer map-node" data-spot="comercio" tabindex="0" role="button" aria-label="Inspeccionar Zona Bulevar">
+                <circle cx="485" cy="302" r="18" fill="#0EA5E9" class="map-pulse" />
+                <circle cx="485" cy="302" r="13" fill="#0284C7" stroke="#FFFFFF" stroke-width="3" />
+                <text x="485" y="307" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">3</text>
+              </g>
+
+              <g class="cursor-pointer map-node" data-spot="canecas" tabindex="0" role="button" aria-label="Inspeccionar Canecas">
+                <circle cx="614" cy="245" r="18" fill="#F97316" class="map-pulse" />
+                <circle cx="614" cy="245" r="13" fill="#F97316" stroke="#FFFFFF" stroke-width="3" />
+                <text x="614" y="250" text-anchor="middle" font-size="12" font-weight="800" fill="#FFFFFF">4</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Panel de detalle del mapa -->
+          <div class="lg:col-span-5">
+            <div id="map-detail-card" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-3">
+                <span id="map-badge" class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-alertOrange-light text-alertOrange-dark">
+                  Punto Crítico #1 • Alerta Sanitaria
+                </span>
+                <span id="map-coords" class="text-xs font-semibold text-slate-400">Bajo estructuras (Cll 8ª–12ª)</span>
+              </div>
+              <h4 id="map-title" class="text-xl font-extrabold text-forest mb-2">
+                Puentes y Puntos Ciegos (Escalinatas Bajas)
+              </h4>
+              <p id="map-desc" class="text-sm text-slate-600 leading-relaxed mb-4">
+                Debajo de los puentes vehiculares y peatonales, la baja visibilidad y la ausencia total de baños públicos gratuitos provocan que personas en situación de calle y transeúntes utilicen la ronda como sanitario al aire libre.
+              </p>
+              <div class="p-3.5 rounded-xl bg-surfaceGray border border-slate-200/80 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-slate-500">Evidencia registrada:</span>
+                  <span id="map-evidence" class="font-bold text-alertOrange-dark">3 a 5 focos en la mañana</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="font-semibold text-slate-500">Impacto principal:</span>
+                  <span id="map-impact" class="font-bold text-forest">Olores amoniacales y riesgo fecal</span>
+                </div>
+              </div>
+
+              <!-- Selector rápido -->
+              <div class="grid grid-cols-4 gap-2 mt-5 pt-4 border-t border-slate-100">
+                <button type="button" data-spot-btn="puentes" class="spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-forest text-white transition-colors">1. Puentes</button>
+                <button type="button" data-spot-btn="laderas" class="spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">2. Laderas</button>
+                <button type="button" data-spot-btn="comercio" class="spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">3. Bulevar</button>
+                <button type="button" data-spot-btn="canecas" class="spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">4. Canecas</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 3: GALERÍA DE LAS 4 EVIDENCIAS FOTOGRÁFICAS DE CAMPO          -->
+  <!-- ===================================================================== -->
+  <section id="evidencias-galeria" class="py-20 bg-surfaceGray border-t border-slate-200/80 reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-dark bg-emeraldRiver-light px-3.5 py-1.5 rounded-full">
+            <i data-lucide="camera" class="w-4 h-4 inline mr-1"></i> Evidencias de Campo Incorporadas
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-forest mt-3">
+            Registro Visual Completo: Las 4 Fotografías de la Investigación
+          </h2>
+          <p class="text-slate-600 text-base max-w-2xl mt-2">
+            Haz clic en cualquier fotografía para ampliarla y analizar en detalle los focos de contaminación y la riqueza natural del Bulevar del Río.
+          </p>
+        </div>
+        <span class="text-xs font-semibold text-slate-400 mt-4 sm:mt-0 bg-white px-3.5 py-2 rounded-xl border border-slate-200">
+          4 Hallazgos Visuales Clave
+        </span>
+      </div>
+
+      <!-- Cuadrícula con las 4 imágenes incorporadas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- FOTO 1: rio_panoramica.jpg -->
+        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer" onclick="openPhotoModal('rio_panoramica.jpg', 'Panorámica del Río Cali y Palmas Reales', 'Vista longitudinal del cauce flanqueado por samanes y muros de contención. En las rocas de las orillas se acumulan plásticos y desechos arrastrados por el viento.')">
+          <div class="relative h-64 overflow-hidden bg-slate-900">
+            <img
+              src="rio_panoramica.jpg"
+              alt="Panorámica del Río Cali y las palmas del Bulevar del Río"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80';"
+            />
+            <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-forest/90 text-white text-xs font-bold backdrop-blur-sm">
+              Evidencia #01 • Corredor
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-xs font-bold flex items-center gap-1.5"><i data-lucide="zoom-in" class="w-4 h-4"></i> Clic para ampliar</span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="font-extrabold text-forest text-base mb-1.5">Cauce y Corredor Arbóreo</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Vista panorámica del lecho rocoso y las palmas emblemáticas del Bulevar. Muestra el canal natural y la cercanía inmediata con el paso peatonal.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+              <span>📍 Tramo Calle 8ª</span>
+              <span class="text-emeraldRiver-dark">Patrimonio Paisajístico</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOTO 2: rio_bambu.jpg -->
+        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer" onclick="openPhotoModal('rio_bambu.jpg', 'Barrera Natural de Bambú y Guadua', 'Los guaduales protegen la ladera pero su densidad genera puntos ciegos donde personas arrojan botellas y desechos fuera de la vista de las autoridades.')">
+          <div class="relative h-64 overflow-hidden bg-slate-900">
+            <img
+              src="rio_bambu.jpg"
+              alt="Barrera natural de bambú y guadua tras las rejas del Bulevar del Río"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80';"
+            />
+            <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-emeraldRiver-dark/90 text-white text-xs font-bold backdrop-blur-sm">
+              Evidencia #02 • Vegetación
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-xs font-bold flex items-center gap-1.5"><i data-lucide="zoom-in" class="w-4 h-4"></i> Clic para ampliar</span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="font-extrabold text-forest text-base mb-1.5">Barrera de Bambú en la Ronda</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Vegetación protectora que mitiga el calor y estabiliza la margen del río. En su base se acumulan botellas plásticas y residuos no recogidos.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+              <span>📍 Ronda Margen Izquierda</span>
+              <span class="text-emeraldRiver-dark">Regulación Ecológica</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOTO 3: rio_iguana.jpg -->
+        <div class="group bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer" onclick="openPhotoModal('rio_iguana.jpg', 'Fauna Silvestre sobre Aguas Turbias', 'Una iguana descansando sobre las ramas directamente encima del caudal con alta turbidez y carga de sedimentos, demostrando la necesidad urgente de sanear el río.')">
+          <div class="relative h-64 overflow-hidden bg-slate-900">
+            <img
+              src="rio_iguana.jpg"
+              alt="Iguana verde descansando en la rama sobre el Río Cali"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=600&q=80';"
+            />
+            <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-waterBlue/90 text-white text-xs font-bold backdrop-blur-sm">
+              Evidencia #03 • Fauna
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-xs font-bold flex items-center gap-1.5"><i data-lucide="zoom-in" class="w-4 h-4"></i> Clic para ampliar</span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="font-extrabold text-forest text-base mb-1.5">Fauna en Riesgo Sanitario</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Ejemplar de <em>Iguana iguana</em> en los samanes ribereños. Coexiste con la contaminación del agua turbia y la acumulación de desechos en el lecho.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold">
+              <span>📍 Árboles Ribereños</span>
+              <span class="text-alertOrange-dark font-bold">Especie Sensible</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOTO 4: rio_fuente_basura.jpg (NUEVA IMAGEN SUBIDA POR EL USUARIO) -->
+        <div class="group bg-white rounded-3xl overflow-hidden border-2 border-alertOrange/60 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer relative" onclick="openPhotoModal('rio_fuente_basura.jpg', 'Deterioro e Insalubridad en Espejos de Agua Urbanos', 'Evidencia directa de colillas de cigarrillos, tapas plásticas y agua descompuesta en las fuentes peatonales del Bulevar del Río, foco de vectores y contaminación visual.')">
+          <div class="relative h-64 overflow-hidden bg-slate-900">
+            <img
+              src="rio_fuente_basura.jpg"
+              alt="Agua estancada con colillas de cigarrillo y tapas plásticas en la fuente del Bulevar del Río"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1618477388954-7852f32655ec?auto=format&fit=crop&w=600&q=80';"
+            />
+            <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-alertOrange text-white text-xs font-bold shadow-sm">
+              Evidencia #04 • Alerta Sanitaria
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white text-xs font-bold flex items-center gap-1.5"><i data-lucide="zoom-in" class="w-4 h-4"></i> Clic para ampliar</span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between bg-alertOrange-light/20">
+            <div>
+              <div class="inline-block px-2 py-0.5 rounded bg-alertOrange/20 text-alertOrange-dark text-[10px] font-extrabold uppercase mb-1">
+                Nuevo Hallazgo Urbano
+              </div>
+              <h4 class="font-extrabold text-forest text-base mb-1.5">Insalubridad en Espejos de Agua</h4>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                Fuente a ras de piso con agua estancada turbia, saturada de <strong>colillas de cigarrillo, hojas y tapas plásticas</strong>, junto a aves que beben de ella.
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-alertOrange/20 flex items-center justify-between text-[11px] text-alertOrange-dark font-bold">
+              <span>📍 Paseo Peatonal Central</span>
+              <span>Riesgo Sanitario y Vectores</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 4: PROBLEMÁTICA Y EVIDENCIA AUDIOVISUAL                       -->
+  <!-- ===================================================================== -->
+  <section id="problematica" class="py-20 bg-white border-y border-slate-200/80 reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-alertOrange-dark bg-alertOrange-light px-3.5 py-1.5 rounded-full mb-3">
+          <i data-lucide="alert-circle" class="w-4 h-4"></i> 02. Diagnóstico Ambiental y Sanitario
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-forest tracking-tight mb-4">
+          ¿Qué está pasando con el Río Cali?
+        </h2>
+        <p class="text-slate-600 text-lg leading-relaxed">
+          El trabajo de campo comprobó dos fenómenos simultáneos que deterioran la calidad hídrica, la salud pública y la experiencia turística del Bulevar del Río.
+        </p>
+      </div>
+
+      <!-- Dos tarjetas contrastantes -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="bg-surfaceGray rounded-3xl p-7 sm:p-8 border-l-8 border-waterBlue shadow-sm">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div class="w-12 h-12 rounded-2xl bg-waterBlue-light text-waterBlue flex items-center justify-center shrink-0">
+              <i data-lucide="package-x" class="w-6 h-6"></i>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-waterBlue-light text-waterBlue text-xs font-extrabold">
+              Pico: 4:00 p. m. – 10:00 p. m.
+            </span>
+          </div>
+          <h3 class="text-2xl font-extrabold text-forest mb-3">1. Acumulación de Residuos Sólidos</h3>
+          <p class="text-slate-600 leading-relaxed mb-5">
+            Se registró un promedio superior a <strong>30 residuos sólidos por cada 10 metros</strong> de ladera y lecho rocoso. Durante la tarde y la noche, la alta afluencia gastronómica desborda la capacidad de las canecas existentes.
+          </p>
+          <ul class="space-y-2.5 text-sm text-slate-700">
+            <li class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-waterBlue"></span>
+              <span><strong>Materiales predominantes:</strong> Botellas plásticas, envases de vidrio, colillas, empaques y servilletas.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-waterBlue"></span>
+              <span><strong>Impacto ecológico:</strong> Contaminación física del cauce y amenaza para aves, peces y reptiles.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-surfaceGray rounded-3xl p-7 sm:p-8 border-l-8 border-alertOrange shadow-sm">
+          <div class="flex items-start justify-between gap-4 mb-5">
+            <div class="w-12 h-12 rounded-2xl bg-alertOrange-light text-alertOrange-dark flex items-center justify-center shrink-0">
+              <i data-lucide="biohazard" class="w-6 h-6"></i>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-alertOrange-light text-alertOrange-dark text-xs font-extrabold">
+              Picos: 5–9 a. m. y 7–10 p. m.
+            </span>
+          </div>
+          <h3 class="text-2xl font-extrabold text-forest mb-3">2. Focos de Insalubridad y Sanitario al Aire Libre</h3>
+          <p class="text-slate-600 leading-relaxed mb-5">
+            En los puntos ciegos —debajo de los puentes y en escalinatas bajas—, personas en situación de calle y visitantes utilizan la ronda como baño improvisado ante la carencia de baños públicos gratuitos.
+          </p>
+          <ul class="space-y-2.5 text-sm text-slate-700">
+            <li class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-alertOrange"></span>
+              <span><strong>Evidencia sanitaria:</strong> Olores amoniacales concentrados y aguas estancadas descompuestas en fuentes.</span>
+            </li>
+            <li class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-alertOrange"></span>
+              <span><strong>Afectados:</strong> Transeúntes, familias, deportistas matutinos y comerciantes del sector.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- REPRODUCTOR DE VIDEO + MARCADORES -->
+      <div class="bg-surfaceGray rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-alertOrange-dark">Evidencia Audiovisual en Tiempo Real</span>
+            <h3 class="text-2xl font-extrabold text-forest mt-1">Registro de Campo Nocturno en el Bulevar del Río</h3>
+          </div>
+          <span class="text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200">
+            Sector Café Boulevard (Calle 10ª)
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7">
+            <div class="rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-md">
+              <div class="relative aspect-[9/16] sm:aspect-video max-h-[460px] mx-auto bg-black flex items-center justify-center">
+                <video
+                  id="field-video"
+                  controls
+                  playsinline
+                  preload="metadata"
+                  poster="rio_panoramica.jpg"
+                  class="w-full h-full object-contain"
+                >
+                  <source src="video_1.mp4" type="video/mp4" />
+                  Tu navegador no soporta el formato de video.
+                </video>
+              </div>
+              <div class="p-4 bg-forest text-white flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span class="inline-flex items-center gap-1.5 font-bold text-emeraldRiver-light">
+                  <i data-lucide="video" class="w-4 h-4"></i> Registro Nocturno de Contaminación y Afluencia
+                </span>
+                <span id="video-time-indicator" class="font-mono bg-white/10 px-2.5 py-1 rounded-md">00:00 / 00:15</span>
+              </div>
+            </div>
+
+            <!-- Marcadores interactivos -->
+            <div class="mt-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">
+                Salta directamente al segundo clave del registro:
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <button type="button" data-seek="0" class="video-marker-btn text-left p-3 rounded-xl border border-slate-200 bg-white hover:border-waterBlue transition-all">
+                  <span class="inline-block px-2 py-0.5 rounded bg-waterBlue text-white text-[11px] font-extrabold mb-1">00:00 – 00:05</span>
+                  <p class="text-xs font-bold text-forest leading-snug">Afluencia comercial nocturna</p>
+                </button>
+                <button type="button" data-seek="6" class="video-marker-btn text-left p-3 rounded-xl border border-slate-200 bg-white hover:border-alertOrange transition-all">
+                  <span class="inline-block px-2 py-0.5 rounded bg-alertOrange text-white text-[11px] font-extrabold mb-1">00:06 – 00:10</span>
+                  <p class="text-xs font-bold text-forest leading-snug">Enfoque al lecho con plásticos</p>
+                </button>
+                <button type="button" data-seek="11" class="video-marker-btn text-left p-3 rounded-xl border border-slate-200 bg-white hover:border-emeraldRiver transition-all">
+                  <span class="inline-block px-2 py-0.5 rounded bg-forest text-white text-[11px] font-extrabold mb-1">00:11 – 00:15</span>
+                  <p class="text-xs font-bold text-forest leading-snug">Consumo y saturación de canecas</p>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contraste con el nuevo hallazgo de insalubridad -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-alertOrange-dark">Correlación de Evidencias</span>
+              <h4 class="text-lg font-extrabold text-forest mt-1 mb-2">Del Río a las Fuentes Peatonales</h4>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                La falta de canecas y de cultura no solo afecta el cauce natural del río, sino que también degrada los espejos de agua diseñados para embellecer el Bulevar, convirtiéndolos en ceniceros gigantes y focos de infección.
+              </p>
+              <div class="p-3.5 rounded-xl bg-alertOrange-light/30 border border-alertOrange/30 text-xs text-alertOrange-dark font-medium">
+                <strong>Dato de campo:</strong> En un radio de 5 metros alrededor de la fuente peatonal se identificaron más de 45 colillas de cigarrillos arrojadas al agua estancada.
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-emeraldRiver-dark">Biodiversidad Amenazada</span>
+              <h4 class="text-lg font-extrabold text-forest mt-1 mb-2">Fauna expuesta a agua contaminada</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Tanto las iguanas en las ramas como las palomas y aves que bajan a tomar agua consumen líquidos con lixiviados de colillas y coliformes, amenazando la fauna protegida de la ciudad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 5: MÉTODO CIENTÍFICO PASO A PASO (FASES 1 A 7)               -->
+  <!-- ===================================================================== -->
+  <section id="metodo-cientifico" class="py-20 bg-surfaceGray reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-dark bg-emeraldRiver-light px-3.5 py-1.5 rounded-full mb-3">
+          <i data-lucide="flask-conical" class="w-4 h-4"></i> 03. Rigor Investigativo
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-forest tracking-tight mb-4">
+          Aplicación del Método Científico en el Bulevar del Río
+        </h2>
+        <p class="text-slate-600 text-lg leading-relaxed">
+          Explora cada una de las <strong>7 fases del método científico</strong> desarrolladas durante el trabajo de campo para transformar la observación en evidencia rigurosa.
+        </p>
+      </div>
+
+      <!-- Pestañas horizontales -->
+      <div class="flex overflow-x-auto pb-3 mb-8 gap-2 no-scrollbar" role="tablist" aria-label="Fases del Método Científico">
+        <button type="button" data-phase="1" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-forest text-white shadow-sm transition-all">
+          Fase 1. Observación
+        </button>
+        <button type="button" data-phase="2" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 2. Problema
+        </button>
+        <button type="button" data-phase="3" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 3. Pregunta
+        </button>
+        <button type="button" data-phase="4" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 4. Hipótesis
+        </button>
+        <button type="button" data-phase="5" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 5. Variables
+        </button>
+        <button type="button" data-phase="6" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 6. Metodología
+        </button>
+        <button type="button" data-phase="7" class="phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all">
+          Fase 7. Conclusiones
+        </button>
+      </div>
+
+      <!-- Paneles dinámicos de las fases -->
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-14 shadow-sm">
+        
+        <!-- FASE 1 -->
+        <div id="phase-panel-1" class="phase-panel space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span class="px-3.5 py-1 rounded-full bg-waterBlue text-white text-xs font-extrabold uppercase">Fase 01 • Registro Sensorial y Espacial</span>
+            <span class="text-sm font-semibold text-slate-500">19/10/2026 – 25/10/2026 | 6:00 a. m. – 9:00 p. m.</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Observación Directa en la Ronda del Río Cali</h3>
+          <p class="text-slate-700 leading-relaxed text-base">
+            Durante recorridos sistemáticos entre la Calle 8ª y la Calle 12ª se constató la acumulación de botellas plásticas, vidrios, colillas y servilletas sobre el lecho rocoso, laderas y fuentes peatonales. En puntos ciegos debajo de puentes y escalinatas se registró el uso de la ronda como baño al aire libre.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <h4 class="font-extrabold text-forest text-sm mb-1.5">¿Qué ocurre?</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">Contaminación física y microbiológica del agua, malos olores y fuentes ornamentales con basura estancada.</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <h4 class="font-extrabold text-forest text-sm mb-1.5">¿A quiénes afecta?</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">Transeúntes, deportistas, turistas, comerciantes del Bulevar y la fauna silvestre (iguanas, aves).</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <h4 class="font-extrabold text-forest text-sm mb-1.5">¿Cuándo ocurre?</h4>
+              <p class="text-xs text-slate-600 leading-relaxed">Basuras aumentan de 4:00 p. m. a 10:00 p. m.; el uso sanitario ocurre temprano en la mañana (5–9 a. m.) y de noche.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 2 -->
+        <div id="phase-panel-2" class="phase-panel hidden space-y-6">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-alertOrange text-white text-xs font-extrabold uppercase">Fase 02 • Delimitación del Fenómeno</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Identificación del Problema: Las 5 Preguntas Clave</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <span class="text-xs font-extrabold text-alertOrange-dark">1. ¿Cuál es el problema?</span>
+              <p class="text-sm text-slate-700 mt-1.5">Contaminación por residuos sólidos y problemática fecal/sanitaria por uso de la ronda como baño público.</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <span class="text-xs font-extrabold text-waterBlue">2. ¿Dónde ocurre?</span>
+              <p class="text-sm text-slate-700 mt-1.5">En las laderas, puentes, lecho del Río Cali y fuentes del paseo peatonal del Bulevar (Calle 8ª a Calle 12ª).</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <span class="text-xs font-extrabold text-emeraldRiver-dark">3. ¿Cuándo ocurre?</span>
+              <p class="text-sm text-slate-700 mt-1.5">Diariamente: desechos en tardes/noches; deposiciones bajo puentes principalmente en mañanas y noches.</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200">
+              <span class="text-xs font-extrabold text-forest">4. ¿A quién afecta?</span>
+              <p class="text-sm text-slate-700 mt-1.5">A la ciudadanía caleña, turistas, comerciantes y al patrimonio ecológico del río.</p>
+            </div>
+            <div class="bg-surfaceGray p-5 rounded-2xl border border-slate-200 sm:col-span-2">
+              <span class="text-xs font-extrabold text-alertOrange-dark">5. ¿Qué evidencias existen?</span>
+              <p class="text-sm text-slate-700 mt-1.5">Conteo directo de más de 30 residuos por 10 m, fuentes con colillas y tapas plásticas, y olores amoniacales bajo puentes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 3 -->
+        <div id="phase-panel-3" class="phase-panel hidden space-y-6">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-forest text-white text-xs font-extrabold uppercase">Fase 03 • Problematización Científica</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Formulación de la Pregunta de Investigación</h3>
+          <div class="bg-surfaceGray p-6 sm:p-8 rounded-2xl border-l-4 border-waterBlue shadow-sm">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-waterBlue">Pregunta Central</span>
+            <p class="font-editorial text-lg sm:text-xl text-forest font-bold mt-2 leading-relaxed">
+              “¿Qué factores (infraestructura de canecas, disponibilidad de baños públicos y afluencia de personas) inciden principalmente en la acumulación de basura y en el uso del Río Cali como baño al aire libre en el sector del Bulevar del Río?”
+            </p>
+          </div>
+        </div>
+
+        <!-- FASE 4 -->
+        <div id="phase-panel-4" class="phase-panel hidden space-y-6">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-emeraldRiver text-white text-xs font-extrabold uppercase">Fase 04 • Supuesto Explicativo</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Formulación de la Hipótesis</h3>
+          <div class="bg-gradient-to-br from-forest to-forest-light text-white p-7 sm:p-9 rounded-3xl shadow-md">
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-2xl bg-emeraldRiver/20 border border-emeraldRiver/40 flex items-center justify-center text-emeraldRiver-light shrink-0">
+                <i data-lucide="lightbulb" class="w-7 h-7"></i>
+              </div>
+              <div>
+                <span class="text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-light">Hipótesis de Trabajo</span>
+                <p class="font-editorial text-lg sm:text-xl leading-relaxed mt-2">
+                  “La acumulación de basuras y el uso del río como sanitario se deben principalmente a la <strong>falta de baños públicos gratuitos/accesibles</strong> y a la <strong>saturación o insuficiente número de canecas en horas pico</strong>, combinado con la falta de cultura ciudadana y controles de aseo nocturnos.”
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 5 -->
+        <div id="phase-panel-5" class="phase-panel hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="inline-block px-3.5 py-1 rounded-full bg-waterBlue text-white text-xs font-extrabold uppercase mb-2">Fase 05 • Operacionalización</span>
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Variables del Estudio</h3>
+            </div>
+          </div>
+          <div class="overflow-x-auto bg-surfaceGray rounded-2xl border border-slate-200">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-100 border-b border-slate-200 text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                  <th class="py-3 px-4">Variable</th>
+                  <th class="py-3 px-4">Tipo</th>
+                  <th class="py-3 px-4">Medición en Campo</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr>
+                  <td class="py-3 px-4 font-bold text-forest">Infraestructura sanitaria y canecas</td>
+                  <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-waterBlue-light text-waterBlue">Independiente</span></td>
+                  <td class="py-3 px-4 text-slate-600">Conteo de canecas operativas y baños disponibles en el tramo.</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-forest">Afluencia de visitantes</td>
+                  <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-waterBlue-light text-waterBlue">Independiente</span></td>
+                  <td class="py-3 px-4 text-slate-600">Estimación del flujo peatonal en 3 bloques horarios.</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-forest">Residuos acumulados por 10 m</td>
+                  <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-alertOrange-light text-alertOrange-dark">Dependiente</span></td>
+                  <td class="py-3 px-4 text-slate-600">Conteo directo de plásticos y empaques en laderas y fuentes.</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-forest">Focos bajo puentes</td>
+                  <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-alertOrange-light text-alertOrange-dark">Dependiente</span></td>
+                  <td class="py-3 px-4 text-slate-600">Registro de eventos y olores amoniacales por franja horaria.</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-bold text-forest">Tramo y periodo de estudio</td>
+                  <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emeraldRiver-light text-emeraldRiver-dark">Control</span></td>
+                  <td class="py-3 px-4 text-slate-600">Calle 8ª a 12ª durante 7 días continuos de observación.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FASE 6 -->
+        <div id="phase-panel-6" class="phase-panel hidden space-y-6">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-forest text-white text-xs font-extrabold uppercase">Fase 06 • Protocolo Metodológico</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Diseño de la Metodología</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200 space-y-2">
+              <h4 class="text-base font-extrabold text-forest">1. Mapeo y Observación Directa</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Recorridos sistemáticos a pie en 3 franjas horarias (mañana, tarde y noche) contando residuos por cada 10 metros, estado de canecas y fuentes, e inspección bajo los puentes.
+              </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-surfaceGray border border-slate-200 space-y-2">
+              <h4 class="text-base font-extrabold text-forest">2. Encuestas Comunitarias</h4>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Cuestionario de 5 preguntas a comerciantes formales, informales y transeúntes del Bulevar del Río para contrastar la percepción ciudadana con las mediciones físicas.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 7 -->
+        <div id="phase-panel-7" class="phase-panel hidden space-y-6">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-emeraldRiver text-white text-xs font-extrabold uppercase">Fase 07 • Diagnóstico Final</span>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-forest">Instrumentos y Conclusiones del Estudio</h3>
+          <p class="text-slate-700 leading-relaxed text-sm sm:text-base">
+            La hipótesis fue <strong>comprobada en su totalidad</strong>: la acumulación de desechos alcanza su pico crítico en la noche (50–70 objetos / 10 m) coincidiendo con la saturación al 100% de las canecas, mientras que los focos sanitarios ocurren por la falta total de baños públicos gratuitos.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#resultados" class="px-5 py-3 rounded-xl bg-forest text-white text-xs sm:text-sm font-bold hover:bg-emeraldRiver transition-colors inline-flex items-center gap-2">
+              <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Explorar Matriz de Datos
+            </a>
+            <a href="#encuesta" class="px-5 py-3 rounded-xl bg-surfaceGray border border-slate-300 text-forest text-xs sm:text-sm font-bold hover:bg-slate-200 transition-colors inline-flex items-center gap-2">
+              <i data-lucide="clipboard-list" class="w-4 h-4"></i> Realizar Encuesta Ciudadana
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 6: TABLERO DE RESULTADOS POR FRANJA HORARIA                   -->
+  <!-- ===================================================================== -->
+  <section id="resultados" class="py-20 bg-white border-y border-slate-200/80 reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div class="max-w-2xl">
+          <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-waterBlue bg-waterBlue-light px-3.5 py-1.5 rounded-full mb-3">
+            <i data-lucide="activity" class="w-4 h-4"></i> 04. Matriz de Registro de Campo
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-forest tracking-tight mb-3">
+            Comportamiento de la Contaminación por Franja Horaria
+          </h2>
+          <p class="text-slate-600 text-base sm:text-lg">
+            Selecciona una franja horaria para simular las condiciones medidas en campo a lo largo del tramo Calle 8ª – Calle 12ª.
+          </p>
+        </div>
+
+        <div class="inline-flex p-1.5 rounded-2xl bg-surfaceGray border border-slate-200 shadow-sm self-start">
+          <button type="button" data-slot="manana" class="slot-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-forest text-white transition-all">
+            Mañana (6–9 a. m.)
+          </button>
+          <button type="button" data-slot="tarde" class="slot-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-forest transition-all">
+            Tarde (12–3 p. m.)
+          </button>
+          <button type="button" data-slot="noche" class="slot-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-forest transition-all">
+            Noche (6–9 p. m.)
+          </button>
+        </div>
+      </div>
+
+      <!-- Tarjetas dinámicas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-surfaceGray rounded-3xl p-6 sm:p-7 border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Residuos / 10 metros</span>
+            <div class="w-10 h-10 rounded-xl bg-waterBlue-light text-waterBlue flex items-center justify-center">
+              <i data-lucide="trash" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <p id="slot-trash-value" class="text-3xl sm:text-4xl font-extrabold text-forest mb-2">15 a 20 objetos</p>
+          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden mb-3">
+            <div id="slot-trash-bar" class="h-full bg-waterBlue rounded-full transition-all duration-500" style="width: 28%;"></div>
+          </div>
+          <p id="slot-trash-note" class="text-xs text-slate-600 leading-relaxed">
+            Menor acumulación tras la jornada matutina de aseo urbano.
+          </p>
+        </div>
+
+        <div class="bg-surfaceGray rounded-3xl p-6 sm:p-7 border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Estado de Canecas</span>
+            <div class="w-10 h-10 rounded-xl bg-emeraldRiver-light text-emeraldRiver-dark flex items-center justify-center">
+              <i data-lucide="archive" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <p id="slot-bins-value" class="text-2xl sm:text-3xl font-extrabold text-emeraldRiver-dark mb-2">Vacías / Limpias</p>
+          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden mb-3">
+            <div id="slot-bins-bar" class="h-full bg-emeraldRiver rounded-full transition-all duration-500" style="width: 15%;"></div>
+          </div>
+          <p id="slot-bins-note" class="text-xs text-slate-600 leading-relaxed">
+            Capacidad disponible superior al 85% en el paseo peatonal.
+          </p>
+        </div>
+
+        <div class="bg-surfaceGray rounded-3xl p-6 sm:p-7 border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Focos bajo puentes</span>
+            <div class="w-10 h-10 rounded-xl bg-alertOrange-light text-alertOrange-dark flex items-center justify-center">
+              <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            </div>
+          </div>
+          <p id="slot-sanitary-value" class="text-2xl sm:text-3xl font-extrabold text-alertOrange-dark mb-2">Alto (3 a 5 eventos)</p>
+          <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden mb-3">
+            <div id="slot-sanitary-bar" class="h-full bg-alertOrange rounded-full transition-all duration-500" style="width: 90%;"></div>
+          </div>
+          <p id="slot-sanitary-note" class="text-xs text-slate-600 leading-relaxed">
+            Pico crítico temprano (5–9 a. m.) por falta de baños públicos habilitados.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tabla y gráfico resumen -->
+      <div class="bg-surfaceGray rounded-3xl border border-slate-200 p-6 sm:p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <h3 class="text-lg font-extrabold text-forest">Matriz de Observación Cuantitativa</h3>
+          <span class="text-xs text-slate-500">Datos consolidados del informe</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse rounded-2xl overflow-hidden border border-slate-200 bg-white text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-forest text-white">
+                <th class="py-3 px-4 font-bold">Franja Horaria</th>
+                <th class="py-3 px-4 font-bold">Residuos / 10 m</th>
+                <th class="py-3 px-4 font-bold">Estado Canecas</th>
+                <th class="py-3 px-4 font-bold">Focos Sanitarios</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-forest">Mañana (6:00–9:00 a. m.)</td>
+                <td class="py-3.5 px-4 font-semibold text-waterBlue">15 a 20 objetos</td>
+                <td class="py-3.5 px-4 text-emeraldRiver-dark font-semibold">Vacías / Recién aseadas</td>
+                <td class="py-3.5 px-4 font-bold text-alertOrange-dark">Alto (3 a 5 eventos)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-forest">Tarde (12:00–3:00 p. m.)</td>
+                <td class="py-3.5 px-4 font-semibold text-waterBlue">25 a 30 objetos</td>
+                <td class="py-3.5 px-4 text-slate-700">Capacidad media (50%)</td>
+                <td class="py-3.5 px-4 font-semibold text-slate-600">Bajo (1 evento)</td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="py-3.5 px-4 font-bold text-forest">Noche (6:00–9:00 p. m.)</td>
+                <td class="py-3.5 px-4 font-extrabold text-waterBlue">50 a 70 objetos</td>
+                <td class="py-3.5 px-4 text-alertOrange-dark font-bold">100% Rebosadas</td>
+                <td class="py-3.5 px-4 font-bold text-alertOrange-dark">Moderado-Alto (2 a 4)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 7: ENCUESTA CIUDADANA PARTICIPATIVA                           -->
+  <!-- ===================================================================== -->
+  <section id="encuesta" class="py-20 bg-surfaceGray reveal-section">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-dark bg-emeraldRiver-light px-3.5 py-1.5 rounded-full mb-3">
+          <i data-lucide="clipboard-list" class="w-4 h-4"></i> 05. Ciencia Participativa
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-forest tracking-tight mb-3">
+          Cuestionario de Campo: Tu Percepción Ciudadana
+        </h2>
+        <p class="text-slate-600 text-base sm:text-lg">
+          Responde las 5 preguntas aplicadas en el Bulevar y compara tu diagnóstico con la hipótesis científica del informe.
+        </p>
+      </div>
+
+      <form id="citizen-survey-form" class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 space-y-7 shadow-sm">
+        <!-- Pregunta 1 -->
+        <fieldset class="space-y-3">
+          <legend class="text-base font-extrabold text-forest">1. ¿Con qué frecuencia visita o trabaja en el Bulevar del Río?</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q1" value="Diariamente" class="accent-emeraldRiver w-4 h-4" required />
+              <span class="text-sm font-medium text-slate-700">Diariamente</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q1" value="2 a 3 veces por semana" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">2 a 3 veces por semana</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q1" value="Fines de semana" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Fines de semana</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q1" value="Ocasionalmente" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Ocasionalmente</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Pregunta 2 -->
+        <fieldset class="space-y-3">
+          <legend class="text-base font-extrabold text-forest">2. ¿Cómo califica la presencia de basuras en la ronda del Río Cali?</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q2" value="Buena / Limpio" class="accent-emeraldRiver w-4 h-4" required />
+              <span class="text-sm font-medium text-slate-700">Buena / Limpio</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q2" value="Regular / Aceptable" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Regular / Aceptable</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q2" value="Mala / Muy contaminado" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Mala / Muy contaminado</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Pregunta 3 -->
+        <fieldset class="space-y-3">
+          <legend class="text-base font-extrabold text-forest">3. ¿Considera que hay suficientes canecas de basura a lo largo del Bulevar?</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q3" value="Sí, hay suficientes" class="accent-emeraldRiver w-4 h-4" required />
+              <span class="text-sm font-medium text-slate-700">Sí, hay suficientes.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q3" value="No, hacen falta más canecas" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">No, hacen falta más.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q3" value="Hay pero se llenan muy rápido" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Hay pero se desbordan.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Pregunta 4 -->
+        <fieldset class="space-y-3">
+          <legend class="text-base font-extrabold text-forest">4. ¿Ha notado malos olores o uso del río como sanitario al aire libre?</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q4" value="Sí, con frecuencia" class="accent-emeraldRiver w-4 h-4" required />
+              <span class="text-sm font-medium text-slate-700">Sí, con frecuencia.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q4" value="A veces" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">A veces.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q4" value="Nunca" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Nunca.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Pregunta 5 -->
+        <fieldset class="space-y-3">
+          <legend class="text-base font-extrabold text-forest">5. ¿Cuál considera que es la principal causa de este problema?</legend>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q5" value="Falta de baños públicos gratuitos" class="accent-emeraldRiver w-4 h-4" required />
+              <span class="text-sm font-medium text-slate-700">Falta de baños públicos gratuitos.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q5" value="Falta de cultura ciudadana" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Falta de cultura ciudadana.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q5" value="Poca frecuencia de recolección nocturna" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-medium text-slate-700">Poca recolección nocturna.</span>
+            </label>
+            <label class="flex items-center gap-3 p-3.5 rounded-xl bg-surfaceGray border border-slate-200 cursor-pointer hover:border-emeraldRiver transition-colors">
+              <input type="radio" name="q5" value="Todas las anteriores" class="accent-emeraldRiver w-4 h-4" />
+              <span class="text-sm font-bold text-forest">Todas las anteriores.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Campo Adicional Opcional: Aporte o Comentario -->
+        <div class="space-y-2 pt-2 border-t border-slate-100">
+          <label for="survey-comment" class="block text-sm font-extrabold text-forest">
+            Aporte o sugerencia adicional (opcional):
+          </label>
+          <input
+            type="text"
+            id="survey-comment"
+            name="comentario"
+            placeholder="Ej: Instalar más canecas frente al puente de la Calle 10..."
+            class="w-full p-3.5 rounded-xl bg-surfaceGray border border-slate-200 text-sm focus:outline-none focus:border-emeraldRiver focus:bg-white transition-all"
+          />
+        </div>
+
+        <div id="survey-error-box" class="hidden p-4 rounded-2xl bg-alertOrange-light border border-alertOrange text-alertOrange-dark text-sm font-bold flex items-center gap-2.5">
+          <i data-lucide="info" class="w-5 h-5 shrink-0"></i>
+          <span>Por favor responde todas las preguntas antes de enviar.</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+          <button type="submit" id="survey-submit-btn" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-emeraldRiver hover:bg-emeraldRiver-dark text-white font-extrabold text-base shadow-lg shadow-emeraldRiver/25 transition-all flex items-center justify-center gap-2.5">
+            <i data-lucide="send" class="w-5 h-5"></i>
+            <span id="survey-btn-text">Enviar respuesta y guardar</span>
+          </button>
+
+          <!-- Botón para consultar respuestas guardadas -->
+          <button type="button" onclick="toggleAdminPanel()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-surfaceGray hover:bg-slate-200 text-slate-700 border border-slate-300 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="database" class="w-4 h-4 text-forest"></i>
+            <span>Consultar respuestas guardadas (<span id="responses-count-badge">0</span>)</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Panel de Consulta de Respuestas Guardadas (Para el Administrador/Autor) -->
+      <div id="admin-responses-panel" class="hidden mt-8 bg-white rounded-3xl border border-slate-300 p-6 sm:p-8 shadow-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 mb-4 border-b border-slate-200">
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-widest text-waterBlue bg-waterBlue-light px-3 py-1 rounded-full">
+              Base de Datos de Respuestas
+            </span>
+            <h3 class="text-xl font-extrabold text-forest mt-1.5">Registro de Respuestas de la Encuesta</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" onclick="exportResponsesToCSV()" class="px-4 py-2 rounded-xl bg-forest hover:bg-emeraldRiver text-white font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>Descargar en Excel / CSV</span>
+            </button>
+            <button type="button" onclick="clearLocalResponses()" class="px-3 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs transition-colors">
+              Limpiar
+            </button>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-500 mb-4">
+          Aquí puedes consultar todas las respuestas que los visitantes han enviado desde este navegador, además de las enviadas a tu hoja de cálculo en Google Sheets.
+        </p>
+
+        <div class="overflow-x-auto max-h-80 overflow-y-auto rounded-xl border border-slate-200">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead class="bg-slate-100 sticky top-0">
+              <tr class="text-slate-600 font-bold border-b border-slate-200">
+                <th class="py-2.5 px-3">Fecha y Hora</th>
+                <th class="py-2.5 px-3">Frecuencia</th>
+                <th class="py-2.5 px-3">Basuras</th>
+                <th class="py-2.5 px-3">Canecas</th>
+                <th class="py-2.5 px-3">Olores / Baño</th>
+                <th class="py-2.5 px-3">Causa Principal</th>
+                <th class="py-2.5 px-3">Aporte Opcional</th>
+              </tr>
+            </thead>
+            <tbody id="responses-table-body" class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td colspan="7" class="py-6 text-center text-slate-400">No hay respuestas registradas aún en este navegador.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Resultado post-envío -->
+      <div id="survey-result-box" class="hidden mt-8 bg-forest text-white rounded-3xl p-7 sm:p-9 shadow-lg border border-emeraldRiver/40">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emeraldRiver text-white flex items-center justify-center shrink-0">
+            <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-light">Resultado Comunitario</span>
+              <span id="save-status-tag" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emeraldRiver/30 text-white border border-emeraldRiver/40">
+                💾 Guardado en base de datos
+              </span>
+            </div>
+            <h3 class="text-2xl font-extrabold">¡Gracias por participar en el diagnóstico!</h3>
+            <p id="survey-feedback-text" class="text-slate-200 text-sm sm:text-base leading-relaxed"></p>
+            <div class="p-4 rounded-2xl bg-white/10 border border-white/15 text-xs sm:text-sm text-emeraldRiver-light">
+              <strong>Correlación Científica:</strong> Tu opinión coincide plenamente con los resultados del informe. El problema no depende de un solo elemento, sino de la combinación de falta de baños públicos, saturación de canecas en horas pico y descuido del mobiliario urbano.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- SECCIÓN 8: PROPUESTAS DE SOLUCIÓN Y ACCIONES                          -->
+  <!-- ===================================================================== -->
+  <section id="acciones" class="py-20 bg-forest text-white reveal-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 space-y-6">
+          <span class="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emeraldRiver-light bg-white/10 px-3.5 py-1.5 rounded-full">
+            <i data-lucide="award" class="w-4 h-4"></i> 06. De la Observación a la Acción
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight">
+            ¿Por qué aplicar el Método Científico a los problemas ambientales urbanos?
+          </h2>
+          <p class="text-slate-200 text-base sm:text-lg leading-relaxed">
+            Sin datos sistemáticos, la problemática se reduce a quejas cotidianas. El <strong>método científico</strong> permite delimitar el territorio (Calle 8ª a 12ª), cuantificar variables objetivas (objetos por 10 m, picos horarios) y proponer soluciones estructurales que la administración y la ciudadanía pueden implementar.
+          </p>
+          <blockquote class="font-editorial italic text-emeraldRiver-light border-l-4 border-emeraldRiver pl-5 py-1 text-base">
+            “Medir con rigor cuánta basura se acumula y en qué horario exacto ocurre la insalubridad es el primer paso para proteger nuestro Río Cali.”
+          </blockquote>
+        </div>
+
+        <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+            <div class="w-10 h-10 rounded-xl bg-waterBlue text-white flex items-center justify-center mb-4">
+              <i data-lucide="door-open" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-extrabold text-lg mb-1.5">1. Baños Públicos Gratuitos</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Instalación de baterías sanitarias accesibles, iluminadas y vigiladas en el Bulevar para eliminar los focos bajo puentes.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+            <div class="w-10 h-10 rounded-xl bg-emeraldRiver text-white flex items-center justify-center mb-4">
+              <i data-lucide="recycle" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-extrabold text-lg mb-1.5">2. Canecas de Alta Capacidad</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Instalación de contenedores soterrados y ceniceros ecológicos antes de los picos nocturnos de afluencia (4 a 10 p. m.).
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+            <div class="w-10 h-10 rounded-xl bg-alertOrange text-white flex items-center justify-center mb-4">
+              <i data-lucide="sparkles" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-extrabold text-lg mb-1.5">3. Mantenimiento de Fuentes</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Limpieza continua de los espejos de agua peatonales y retiro diario de colillas para evitar aguas descompuestas y criaderos de mosquitos.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+            <div class="w-10 h-10 rounded-xl bg-sky-400 text-forest flex items-center justify-center mb-4">
+              <i data-lucide="users" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-extrabold text-lg mb-1.5">4. Cultura y Convivencia</h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Pactos ambientales con establecimientos gastronómicos y campañas ciudadanas para proteger la fauna ribereña.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL / LIGHTBOX PARA AMPLIAR LAS FOTOGRAFÍAS                         -->
+  <!-- ===================================================================== -->
+  <div id="photo-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="relative max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col">
+      <button type="button" onclick="closePhotoModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/70 hover:bg-white text-white hover:text-black flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <div class="max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
+        <img id="modal-img" src="" alt="Ampliación de evidencia de campo" class="max-w-full max-h-[70vh] object-contain" />
+      </div>
+      <div class="p-6 bg-slate-950 text-white">
+        <h4 id="modal-title" class="text-xl font-extrabold text-emeraldRiver-light mb-1"></h4>
+        <p id="modal-desc" class="text-sm text-slate-300 leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- PIE DE PÁGINA                                                         -->
+  <!-- ===================================================================== -->
+  <footer class="bg-forest-dark text-slate-300 py-12 border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="space-y-1.5">
+        <div class="flex items-center gap-2.5 text-white font-extrabold text-base">
+          <i data-lucide="waves" class="w-5 h-5 text-emeraldRiver"></i>
+          <span>RÍO CALI: ENTRE LA BELLEZA URBANA Y LA CONTAMINACIÓN AMBIENTAL</span>
+        </div>
+        <p class="text-xs text-slate-400 max-w-2xl">
+          Informe de Trabajo de Campo: Aplicación del Método Científico en la Ronda del Río Cali (Sector Bulevar del Río, Calle 8ª a Calle 12ª).
+        </p>
+      </div>
+
+      <div class="text-xs text-slate-400 md:text-right space-y-1">
+        <p class="font-semibold text-white">Santiago de Cali, Valle del Cauca, Colombia</p>
+        <p>Monitoreo Ambiental • 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================== -->
+  <!-- SCRIPTS INTERACTIVOS                                                  -->
+  <!-- ===================================================================== -->
+  <script>
+    // =========================================================================
+    // CONFIGURACIÓN DE CONEXIÓN A GOOGLE SHEETS
+    // =========================================================================
+    // Para guardar las respuestas en una hoja de Google Sheets en tiempo real:
+    // Sigue las instrucciones de 'codigo_google_sheets.gs' y pega tu URL aquí:
+    const GOOGLE_SHEETS_URL = ""; 
+    // Nota: Aunque esté vacía, las respuestas se guardan automáticamente en tu
+    // navegador (localStorage) y puedes descargarlas en Excel/CSV desde el panel.
+    // =========================================================================
+
+    // Clave para guardar en almacenamiento local
+    const STORAGE_KEY = 'rio_cali_survey_responses_v1';
+
+    // Obtener respuestas locales
+    function getStoredResponses() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // Guardar una nueva respuesta en localStorage
+    function saveResponseLocally(newEntry) {
+      const current = getStoredResponses();
+      current.unshift(newEntry); // agregar al inicio
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(current));
+      updateResponsesBadge();
+      renderResponsesTable();
+    }
+
+    // Actualizar el contador de respuestas
+    function updateResponsesBadge() {
+      const badge = document.getElementById('responses-count-badge');
+      if (badge) {
+        badge.textContent = getStoredResponses().length;
+      }
+    }
+
+    // Mostrar / Ocultar panel administrativo de respuestas
+    function toggleAdminPanel() {
+      const panel = document.getElementById('admin-responses-panel');
+      if (panel) {
+        panel.classList.toggle('hidden');
+        if (!panel.classList.contains('hidden')) {
+          renderResponsesTable();
+          panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    }
+
+    // Renderizar la tabla con las respuestas
+    function renderResponsesTable() {
+      const tbody = document.getElementById('responses-table-body');
+      if (!tbody) return;
+
+      const responses = getStoredResponses();
+      if (responses.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-6 text-center text-slate-400">No hay respuestas registradas aún en este navegador.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = responses.map(r => `
+        <tr class="hover:bg-slate-50 transition-colors">
+          <td class="py-2.5 px-3 font-semibold text-slate-900">${r.fecha || '-'}</td>
+          <td class="py-2.5 px-3">${r.q1 || '-'}</td>
+          <td class="py-2.5 px-3">${r.q2 || '-'}</td>
+          <td class="py-2.5 px-3">${r.q3 || '-'}</td>
+          <td class="py-2.5 px-3">${r.q4 || '-'}</td>
+          <td class="py-2.5 px-3 font-medium text-emeraldRiver-dark">${r.q5 || '-'}</td>
+          <td class="py-2.5 px-3 italic text-slate-500">${r.comentario || 'Sin comentarios'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // Exportar las respuestas a archivo CSV (abrible en Excel)
+    function exportResponsesToCSV() {
+      const responses = getStoredResponses();
+      if (responses.length === 0) {
+        alert('Aún no hay respuestas para exportar.');
+        return;
+      }
+
+      const headers = ['Fecha y Hora', 'Frecuencia de Visita', 'Calificacion de Basuras', 'Suficiencia de Canecas', 'Presencia de Malos Olores/Baño', 'Causa Principal', 'Aporte Opcional'];
+      const rows = responses.map(r => [
+        `"${(r.fecha || '').replace(/"/g, '""')}"`,
+        `"${(r.q1 || '').replace(/"/g, '""')}"`,
+        `"${(r.q2 || '').replace(/"/g, '""')}"`,
+        `"${(r.q3 || '').replace(/"/g, '""')}"`,
+        `"${(r.q4 || '').replace(/"/g, '""')}"`,
+        `"${(r.q5 || '').replace(/"/g, '""')}"`,
+        `"${(r.comentario || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `respuestas_encuesta_rio_cali_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Limpiar respuestas locales
+    function clearLocalResponses() {
+      if (confirm('¿Deseas vaciar el historial de respuestas guardadas en este navegador?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        updateResponsesBadge();
+        renderResponsesTable();
+      }
+    }
+
+    // Inicializar Lucide Icons y lógica general
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      updateResponsesBadge();
+
+      // 1. Barra de progreso de lectura
+      const progressBar = document.getElementById('reading-progress');
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+      });
+
+      // 2. Menú móvil
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(link => {
+          link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+      }
+
+      // 3. Scroll reveal con IntersectionObserver
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal-section').forEach(sec => observer.observe(sec));
+
+      // 4. Mapa interactivo del Bulevar
+      const mapSpotsData = {
+        puentes: {
+          badge: 'Punto Crítico #1 • Alerta Sanitaria',
+          badgeClass: 'bg-alertOrange-light text-alertOrange-dark',
+          coords: 'Bajo estructuras (Cll 8ª–12ª)',
+          title: 'Puentes y Puntos Ciegos (Escalinatas Bajas)',
+          desc: 'Debajo de los puentes vehiculares y peatonales, la baja visibilidad y la ausencia total de baños públicos gratuitos provocan que personas en situación de calle y transeúntes utilicen la ronda como sanitario al aire libre.',
+          evidence: '3 a 5 focos en la mañana',
+          impact: 'Olores amoniacales y riesgo fecal'
+        },
+        laderas: {
+          badge: 'Punto #2 • Ecosistema Ribereño',
+          badgeClass: 'bg-emeraldRiver-light text-emeraldRiver-dark',
+          coords: 'Márgenes y lecho rocoso',
+          title: 'Laderas Rocosas y Vegetación (Palmas y Bambú)',
+          desc: 'Las barreras de bambú y árboles ribereños albergan fauna silvestre como iguanas y aves, pero las piedras del lecho retienen plásticos y empaques arrojados desde el paseo peatonal.',
+          evidence: '30+ residuos por cada 10 m',
+          impact: 'Deterioro del hábitat acuático'
+        },
+        comercio: {
+          badge: 'Punto #3 • Flujo Comercial',
+          badgeClass: 'bg-waterBlue-light text-waterBlue',
+          coords: 'Sector Café Boulevard / Paseo',
+          title: 'Zona Gastronómica y Afluencia Nocturna',
+          desc: 'Entre las 4:00 p. m. y las 10:00 p. m., la alta concentración de visitantes y locales comerciales incrementa exponencialmente el consumo de envases desechables y comida rápida.',
+          evidence: 'Pico de 50 a 70 objetos / 10 m',
+          impact: 'Contaminación visual y física'
+        },
+        canecas: {
+          badge: 'Punto #4 • Infraestructura de Aseo',
+          badgeClass: 'bg-alertOrange-light text-alertOrange-dark',
+          coords: 'Estaciones a lo largo del Bulevar',
+          title: 'Estaciones de Canecas Saturadas en Hora Pico',
+          desc: 'Aunque en la mañana las canecas amanecen vacías tras el barrido, hacia el anochecer se encuentran 100% rebosadas, facilitando que los residuos caigan hacia el cauce del río.',
+          evidence: '100% rebosadas de 6 a 9 p. m.',
+          impact: 'Desbordamiento hacia el cauce'
+        }
+      };
+
+      const updateMapCard = (key) => {
+        const data = mapSpotsData[key];
+        if (!data) return;
+        const badgeEl = document.getElementById('map-badge');
+        badgeEl.textContent = data.badge;
+        badgeEl.className = `px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider ${data.badgeClass}`;
+        document.getElementById('map-coords').textContent = data.coords;
+        document.getElementById('map-title').textContent = data.title;
+        document.getElementById('map-desc').textContent = data.desc;
+        document.getElementById('map-evidence').textContent = data.evidence;
+        document.getElementById('map-impact').textContent = data.impact;
+
+        document.querySelectorAll('.spot-btn').forEach(btn => {
+          if (btn.dataset.spotBtn === key) {
+            btn.className = 'spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-forest text-white transition-colors';
+          } else {
+            btn.className = 'spot-btn py-2 px-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors';
+          }
+        });
+      };
+
+      document.querySelectorAll('.map-node').forEach(node => {
+        node.addEventListener('click', () => updateMapCard(node.dataset.spot));
+      });
+      document.querySelectorAll('.spot-btn').forEach(btn => {
+        btn.addEventListener('click', () => updateMapCard(btn.dataset.spotBtn));
+      });
+
+      // 5. Video y marcadores de tiempo
+      const fieldVideo = document.getElementById('field-video');
+      const timeIndicator = document.getElementById('video-time-indicator');
+
+      const formatSeconds = (sec) => {
+        const s = Math.floor(sec || 0);
+        return `00:${s < 10 ? '0' : ''}${s}`;
+      };
+
+      if (fieldVideo) {
+        fieldVideo.addEventListener('timeupdate', () => {
+          const dur = fieldVideo.duration ? formatSeconds(fieldVideo.duration) : '00:15';
+          timeIndicator.textContent = `${formatSeconds(fieldVideo.currentTime)} / ${dur}`;
+        });
+      }
+
+      document.querySelectorAll('.video-marker-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetSec = parseFloat(btn.dataset.seek || '0');
+          if (fieldVideo) {
+            fieldVideo.currentTime = targetSec;
+            fieldVideo.play().catch(() => {});
+          }
+        });
+      });
+
+      // 6. Pestañas de Fases del Método Científico
+      document.querySelectorAll('.phase-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const phaseId = tab.dataset.phase;
+          document.querySelectorAll('.phase-tab').forEach(t => {
+            t.className = 'phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition-all';
+          });
+          tab.className = 'phase-tab shrink-0 px-4 py-3 rounded-2xl text-sm font-bold bg-forest text-white shadow-sm transition-all';
+
+          document.querySelectorAll('.phase-panel').forEach(panel => panel.classList.add('hidden'));
+          const targetPanel = document.getElementById(`phase-panel-${phaseId}`);
+          if (targetPanel) targetPanel.classList.remove('hidden');
+        });
+      });
+
+      // 7. Simulador por Franja Horaria
+      const slotsData = {
+        manana: {
+          trashVal: '15 a 20 objetos',
+          trashWidth: '28%',
+          trashNote: 'Menor acumulación tras la jornada matutina de aseo urbano.',
+          binsVal: 'Vacías / Limpias',
+          binsColor: 'text-emeraldRiver-dark',
+          binsBarColor: 'bg-emeraldRiver',
+          binsWidth: '15%',
+          binsNote: 'Capacidad disponible superior al 85% en el paseo peatonal.',
+          sanVal: 'Alto (3 a 5 eventos)',
+          sanColor: 'text-alertOrange-dark',
+          sanBarColor: 'bg-alertOrange',
+          sanWidth: '90%',
+          sanNote: 'Pico crítico temprano (5–9 a. m.) por falta de baños públicos habilitados.'
+        },
+        tarde: {
+          trashVal: '25 a 30 objetos',
+          trashWidth: '48%',
+          trashNote: 'Incremento paulatino por consumo gastronómico en horas de la tarde.',
+          binsVal: 'Capacidad Media (50%)',
+          binsColor: 'text-waterBlue',
+          binsBarColor: 'bg-waterBlue',
+          binsWidth: '50%',
+          binsNote: 'Las canecas se llenan a la mitad antes de la llegada del flujo nocturno.',
+          sanVal: 'Bajo (1 evento observado)',
+          sanColor: 'text-emeraldRiver-dark',
+          sanBarColor: 'bg-emeraldRiver',
+          sanWidth: '25%',
+          sanNote: 'El mayor tránsito de personas y la luz natural inhiben el uso de puntos ciegos.'
+        },
+        noche: {
+          trashVal: '50 a 70 objetos',
+          trashWidth: '96%',
+          trashNote: 'Máximo nivel de acumulación por alta afluencia gastronómica y comercial (4–10 p. m.).',
+          binsVal: '100% Rebosadas',
+          binsColor: 'text-alertOrange-dark',
+          binsBarColor: 'bg-alertOrange',
+          binsWidth: '100%',
+          binsNote: 'Canecas colapsadas; los residuos se derraman hacia las laderas del río.',
+          sanVal: 'Moderado-Alto (2 a 4 eventos)',
+          sanColor: 'text-alertOrange-dark',
+          sanBarColor: 'bg-alertOrange',
+          sanWidth: '75%',
+          sanNote: 'Segundo pico nocturno (7:00–10:00 p. m.) en zonas oscuras bajo puentes.'
+        }
+      };
+
+      document.querySelectorAll('.slot-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const slot = slotsData[btn.dataset.slot];
+          if (!slot) return;
+
+          document.querySelectorAll('.slot-btn').forEach(b => {
+            b.className = 'slot-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-forest transition-all';
+          });
+          btn.className = 'slot-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-forest text-white transition-all';
+
+          document.getElementById('slot-trash-value').textContent = slot.trashVal;
+          document.getElementById('slot-trash-bar').style.width = slot.trashWidth;
+          document.getElementById('slot-trash-note').textContent = slot.trashNote;
+
+          const binsEl = document.getElementById('slot-bins-value');
+          binsEl.textContent = slot.binsVal;
+          binsEl.className = `text-2xl sm:text-3xl font-extrabold mb-2 ${slot.binsColor}`;
+          const binsBar = document.getElementById('slot-bins-bar');
+          binsBar.className = `h-full rounded-full transition-all duration-500 ${slot.binsBarColor}`;
+          binsBar.style.width = slot.binsWidth;
+          document.getElementById('slot-bins-note').textContent = slot.binsNote;
+
+          const sanEl = document.getElementById('slot-sanitary-value');
+          sanEl.textContent = slot.sanVal;
+          sanEl.className = `text-2xl sm:text-3xl font-extrabold mb-2 ${slot.sanColor}`;
+          const sanBar = document.getElementById('slot-sanitary-bar');
+          sanBar.className = `h-full rounded-full transition-all duration-500 ${slot.sanBarColor}`;
+          sanBar.style.width = slot.sanWidth;
+          document.getElementById('slot-sanitary-note').textContent = slot.sanNote;
+        });
+      });
+
+      // 8. Cuestionario ciudadano con guardado automático y sincronización
+      const surveyForm = document.getElementById('citizen-survey-form');
+      const errorBox = document.getElementById('survey-error-box');
+      const resultBox = document.getElementById('survey-result-box');
+      const feedbackText = document.getElementById('survey-feedback-text');
+      const submitBtn = document.getElementById('survey-submit-btn');
+      const btnText = document.getElementById('survey-btn-text');
+      const saveStatusTag = document.getElementById('save-status-tag');
+
+      if (surveyForm) {
+        surveyForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(surveyForm);
+          const q1 = formData.get('q1');
+          const q2 = formData.get('q2');
+          const q3 = formData.get('q3');
+          const q4 = formData.get('q4');
+          const q5 = formData.get('q5');
+          const comentario = formData.get('comentario') || '';
+
+          if (!q1 || !q2 || !q3 || !q4 || !q5) {
+            errorBox.classList.remove('hidden');
+            return;
+          }
+
+          errorBox.classList.add('hidden');
+
+          // Deshabilitar botón durante el proceso
+          submitBtn.disabled = true;
+          submitBtn.classList.add('opacity-75');
+          btnText.textContent = "Guardando respuesta...";
+
+          const now = new Date();
+          const fechaStr = now.toLocaleDateString('es-CO', { 
+            year: 'numeric', month: '2-digit', day: '2-digit', 
+            hour: '2-digit', minute: '2-digit' 
+          });
+
+          const entry = {
+            fecha: fechaStr,
+            q1: q1,
+            q2: q2,
+            q3: q3,
+            q4: q4,
+            q5: q5,
+            comentario: comentario
+          };
+
+          // 1. Guardar de inmediato en almacenamiento local (siempre disponible)
+          saveResponseLocally(entry);
+
+          // 2. Si hay URL de Google Sheets configurada, enviar por Webhook
+          let syncedWithSheets = false;
+          if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL.trim().startsWith('http')) {
+            try {
+              // Modo no-cors para compatibilidad universal con Google Apps Script
+              await fetch(GOOGLE_SHEETS_URL.trim(), {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(entry).toString()
+              });
+              syncedWithSheets = true;
+            } catch (err) {
+              console.warn("No se pudo sincronizar con Google Sheets en este momento, se guardó localmente:", err);
+            }
+          }
+
+          // Restaurar botón
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75');
+          btnText.textContent = "Respuesta enviada ✓";
+
+          if (saveStatusTag) {
+            if (syncedWithSheets) {
+              saveStatusTag.textContent = "✅ Guardado en Google Sheets y en navegador";
+            } else {
+              saveStatusTag.textContent = "💾 Guardado en base de datos local (Listo para exportar)";
+            }
+          }
+
+          feedbackText.innerHTML = `Como visitante/trabajador que acude <strong>${q1.toLowerCase()}</strong>, señalas que el estado de basuras es <strong>“${q2}”</strong>, consideras que <strong>“${q3.toLowerCase()}”</strong> e identificas como factor clave: <strong>“${q5}”</strong>. Tu diagnóstico ha sido registrado y respalda las conclusiones científicas del estudio de campo.`;
+          
+          resultBox.classList.remove('hidden');
+          resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      }
+    });
+
+    // 9. Funciones del Modal de Fotos
+    function openPhotoModal(src, title, desc) {
+      const modal = document.getElementById('photo-modal');
+      const img = document.getElementById('modal-img');
+      const titleEl = document.getElementById('modal-title');
+      const descEl = document.getElementById('modal-desc');
+
+      img.src = src;
+      titleEl.textContent = title;
+      descEl.textContent = desc;
+      modal.classList.remove('hidden');
+    }
+
+    function closePhotoModal() {
+      const modal = document.getElementById('photo-modal');
+      modal.classList.add('hidden');
+    }
+
+    document.getElementById('photo-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'photo-modal') {
+        closePhotoModal();
+      }
+    });
+  </script>
+</body>
+</html>
